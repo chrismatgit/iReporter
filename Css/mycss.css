@@ -133,7 +133,7 @@ span{
     width: 75%;
 
 }
-@media (max-width: 720px) {
+@media (max-width: 700px) {
 	.login-box{
 		width: 90%;
 		border: 10px;
@@ -145,17 +145,20 @@ span{
         float: none;
     }
     .block .margin-auto{
-        width: 300px;
-        padding-left: 35px;
-        padding-right: 35px;
+        width: 100px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     .set-right{
 		position: relative;
 		left: 5px;
 	}
 	.quater{
-			width: 33%;
+			width: 100%;
 			padding: 0px;
+		}
+	.third-quarter{
+			width: 10%;
 		}
 	.banner .search{
 		width: 200px;
@@ -187,6 +190,9 @@ span{
 		background-color: #fff;
 		border-bottom: 1px solid #aaa;
 	}
+	.box{
+		width: 45%;
+	}
 	.box .title{
 		width: 45%;
 		margin: 0;
@@ -196,5 +202,10 @@ span{
 	}
 	.block{
 		align-content: auto;
+		width: 45%;
+	}
+	body {
+		height: 20%
 	}
 }
+

@@ -335,16 +335,17 @@ textarea:focus{
 #createnow-btn{
 	width: 20%;
 }
-@media (max-width: 600px) {
+@media (max-width: 720px) {
 	.block .margin-auto{
         width: 300px;
         padding-left: 35px;
         padding-right: 35px;
+        min-width: 500px,
     }	
     	header {
 			padding-right: 0px;
 			margin-left: 0;
-			width: 300px;
+			width: 33%;
 		}
 	
 		header h1{
@@ -356,9 +357,13 @@ textarea:focus{
 			left: 5px;
 		}
 		.quater{
-				width: 33%;
+				width: 70%;
 				padding: 0px;
 			}
+
+		.third-quater{
+			width: 45%;
+		}
 		.banner .search{
 			width: 200px;
 			padding: 0px;
@@ -368,9 +373,17 @@ textarea:focus{
 		p{
 			width: 40%;
 		}
+
+		.grid.left{
+			border-right: none;
+		}
+		.grid.right{
+			border-left: none;
+			margin-left: none;
+		}
 		.tit{
 			text-align: left;
-			width: 40%;
+			width: 33%;
 		}
 		.movies{
 			width: 40%;
@@ -390,7 +403,7 @@ textarea:focus{
 			border-bottom: 1px solid #aaa;
 		}
 		.box .title{
-			width: 45%;
+			width: 100%;
 			margin: 0;
 		}
 		.box .soften{
@@ -441,11 +454,11 @@ textarea:focus{
 		    text-transform: uppercase;
 		}
 		  
-		table td:last-child {
+		/*table td:last-child {
 		    border-bottom: 0;
-		}
+		}*/
 		.cart {
-			width: 40%;
+			width: 90%;
 		}
 		.margin-left{
 			width: 100px;
@@ -454,21 +467,26 @@ textarea:focus{
 			float: none;
 		}
 		textarea{
-			width: 40%;
+			width: 100%;
 			margin-left: 0px;
 		}
 		.input-box{
-			width: 40%;
+			width: 100%;
 		}
 		.signup-btn{
-			width: 20%;
+			width: 100%;
 		}
 		.tag{
-			width: 15%;
+			width: 100%;
 		}
 		.info{
 			text-align: left;
 			font-size: 20px;
 			color: #800000;
 		}
+		.box{
+			margin: 0;
+		}
+
 }
+
