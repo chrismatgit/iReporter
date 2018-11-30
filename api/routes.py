@@ -242,9 +242,10 @@ def signUp():
         
         User.accounts.append(account.__dict__)
         return jsonify({
+            'status': 201,
             'account': account.__dict__,
             'message': 'account created'
-            })
+            }),201
     except Exception:
         return jsonify({'message': 'Something went wrong with your inputs'}), 400
 
