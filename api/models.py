@@ -33,13 +33,6 @@ class Incident(object):
         self.id = id
         self.isadmin = isadmin
 
-
-    # def validate_createdOn(self):
-    #     if not self.createdOn or self.createdOn.isspace():
-    #         return False  
-    #     else:
-    #         return True
-
     def validate_createdBy(self):
         if not self.createdBy or self.createdBy.isspace():
             return False
