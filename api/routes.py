@@ -30,10 +30,6 @@ def add_Incident():
          status, image, video, comment, id, isadmin)
 
         
-        # if incident.validate_createdOn() is False:
-        #     return jsonify({
-        #         'message': 'createdOn field can not be left empty'
-        #     }), 400
         if incident.validate_createdBy() is False:
             return jsonify({
                 'message': 'createdBy field can not be left empty'
@@ -124,8 +120,8 @@ def update_incicent_location(id):
         return jsonify({
                 'status': 200,
                 'data': incident,
-                'message': 'update'
-            })
+                'message': 'incident location updated'
+            }), 200
     except IndexError:
         return jsonify({
             'message': 'incident does not exit or check your id',
@@ -275,7 +271,7 @@ def get_single_account(id):
     except IndexError:
         return jsonify({
             'message': 'account does not exit or check your id'
-        })
+        }), 404
 
 
 

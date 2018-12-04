@@ -1,57 +1,56 @@
 import re
-# from api.models import User
-class Users_validation:
-    def __init__(self, firstname, lastname, othername, email, phoneNumber, username, registered, password, isadmin=False):
+class Validations:
+    def __init__(self, firstname, lastname, othername, email, phone_number, username, registered, password):
         self.firstname = firstname
         self.lastname = lastname
         self.othername = othername
         self.email = email
-        self.phoneNumber = phoneNumber
+        self.phone_number = phone_number
         self.username = username
         self.registered = registered
         self.password = password
-        # self.isadmin = isadmin
+         
+    def validate_firstname(self):
+        if not self.firstname or self.firstname.isspace() or type(self.firstname) == str:
+            return {'message': 'Firstname field can not be left empty'}
 
-    def validate_input(self):
-        if not self.firstname or self.firstname.isspace():
-            return 'Firstname field can not be left empty'
-        elif not self.lastname or self.lastname.isspace():
-            return 'Lastname field can not be left empty.'
-        elif not self.othername or self.othername.isspace():
-            return 'Othername field can not be left empty.'
-        elif not self.phoneNumber or self.phoneNumber.isspace():
-            return 'phoneNumber can not be left empty'
-        elif len(self.phoneNumber)<10:
-            return 'Phone number has to be longer than 10 characters.'
-        elif not self.username or self.username.isspace():
-            return 'Username field can not be left empty.'
-        elif not self.registered or self.registered.isspace():
-            return 'registered can not be left empty'
-        # elif not re.match(r"\d{1,2}\/\d{1,2}\/\d{4}+", self.registered)
-        #     return 'Enter a valid date... eg: 21/3/2018'
-        elif not self.email or self.email.isspace():
-            return 'Email field can not be left empty.'
-        elif not re.match(r"[^@.]+@[A-Za-z]+\.[a-z]+", self.email):
-            return 'Enter a valid email address.'
-        elif not self.password or self.password.isspace():
-            return 'Password field can not be left empty.'
-        elif len(self.password) < 8:
-            return 'Password has to be longer than 8 characters.'
+    def validate_lastname(self):
+        if not self.lastname or self.lastname.isspace() or type(self.lastname) == str:
+            return {'message': 'Lastname field can not be left empty'}
+        
+
+    def validate_othername(self):
+        if not self.othername or self.othername.isspace():
+            return {'message': 'othername field can not be left empty'}
+        
     
-    # def check_user_exist(self):
-    #     for user in User:
-    #         username = user['username']
-    #         email = user['email']
-    #         if username != None:
-    #             return 'Username is taken.'
-    #         if email != None:
-    #             return 'Email already has an account.'
+    def validate_email(self):
+        if not self.email or self.email.isspace() or \
+        not re.match(r"[^@.]+@[A-Za-z]+\.[a-z]+", self.email):
+            return {'message': 'Email field can not be left empty or is invalid(eg: example@example.com)'}
+        
 
-    # @staticmethod
-    # def login_validate(username, password):
-    #     if not username or username.isspace():
-    #         return 'Username field can not be left empty.'
-    #     elif not password or password.isspace():
-    #         return 'Password field can not be left empty.'
-    #     else:
-    #         return False
+    def validate_phoneNumber(self):
+        if not self.phone_number or self.phone_number.isspace() or \
+        len(self.phone_number)<9:
+            return {'message': 'phone_number field can not be left empty and should be more than 9'}
+        
+
+    def validate_username(self):
+        if not self.username or self.username.isspace():
+            return {'message': 'Username field can not be left empty'}
+        
+
+    def validate_registered(self):
+        if not self.registered or self.registered.isspace():
+            return {'message': 'Registered field can not be left empty'}
+        
+    
+    def validate_password(self):
+        if not self.password or self.password.isspace() or \
+        len(self.password) < 8:
+            return {'message': 'Password field can not be left empty or is less than 8'}
+        
+    # def tearDown(self):
+    #     Incident.incidents.clear()
+

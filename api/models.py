@@ -47,7 +47,7 @@ class Incident(object):
             return True
     
     def validate_location(self):
-        if not self.location or self.location.isspace() or not isinstance(int):
+        if not self.location or self.location.isspace():
             return False
         else:
             return True
@@ -95,17 +95,17 @@ class User(object):
                 "isadmin": False
             }
         ]
-    def __init__(self, *args):
-        self.firstname = args[0]
-        self.lastname = args[1]
-        self.othername = args[2]
-        self.email = args[3]
-        self.phoneNumber = args[4]
-        self.username = args[5]
-        self.registered = args[6]
-        self.password = args[7]
-        self.id = args[8]
-        self.isadmin = args[9]
+    def __init__(self, firstname, lastname, othername, email, phoneNumber, username, registered, password, id, isadmin):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.othername = othername
+        self.email = email
+        self.phoneNumber = phoneNumber
+        self.username = username
+        self.registered = registered
+        self.password = password
+        self.id = id
+        self.isadmin = isadmin
 
 
     def validate_firstname(self):
