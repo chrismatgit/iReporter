@@ -2,15 +2,19 @@ from flask import Flask, jsonify, request
 import datetime
 from api.models import Incident, User
 # from api.validations import Users_validation
-# from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
 
 app = Flask(__name__)
+jwt = JWTManager(app)
+app.config['JWT_SECRET_KEY'] = 'SECretK1ey'
+
 
 @app.route('/')
 def welcome():
     return "welcome"
 
 @app.route('/api/v1/incident/', methods=['POST'])
+@jwt_required
 def add_Incident():
 
     try: 
@@ -70,10 +74,11 @@ def add_Incident():
 
 
 @app.route('/api/v1/incidents/', methods=['GET'])
+@jwt_required
 def get_incidents():
     if len(Incident.incidents) == 0:
         return jsonify({
-            'message': 'There are no user yet!'
+            'message': 'There are no incident yet!'
         }), 400
 
     return jsonify({
@@ -82,6 +87,7 @@ def get_incidents():
     }), 200
 
 @app.route('/api/v1/incident/<int:id>', methods=['GET'])
+@jwt_required
 def get_single_incicent(id):
     try:
         if len(Incident.incidents) == 0:
@@ -101,6 +107,7 @@ def get_single_incicent(id):
         }), 404
 
 @app.route('/api/v1/edit_location/<int:id>', methods=['PATCH'])
+@jwt_required
 def update_incicent_location(id):
     try:
   
@@ -131,6 +138,7 @@ def update_incicent_location(id):
 
 
 @app.route('/api/v1/edit_comment/<int:id>', methods=['PATCH'])
+@jwt_required
 def update_incicent_comment(id):
     try:
   
@@ -150,7 +158,7 @@ def update_incicent_comment(id):
         return jsonify({
                 'status': 200,
                 'data': incident,
-                'message': 'update'
+                'message': 'incident update'
             })
     except IndexError:
         return jsonify({
@@ -160,6 +168,7 @@ def update_incicent_comment(id):
 
 
 @app.route('/api/v1/delete_incident/<int:id>', methods=['GET'])
+@jwt_required
 def delete_incicent(id):
     try:
         if len(Incident.incidents) == 0:
@@ -237,16 +246,52 @@ def signUp():
             }), 400
         
         User.accounts.append(account.__dict__)
+        token = create_access_token(username)
         return jsonify({
             'status': 201,
+            'token': token,
             'account': account.__dict__,
             'message': 'account created'
             }),201
     except Exception:
         return jsonify({'message': 'Something went wrong with your inputs'}), 400
 
+@app.route('/api/v1/login', methods=['POST'])
+def login():
+    data = request.get_json()
+
+    username = data.get('username')
+    password = data.get('password')
+    for user in User.accounts:
+        if user['username'] == username and user['password'] == password:
+            token = create_access_token(username)
+            return jsonify({
+                'token': token,
+                'message': f'{username} successfully logged in'
+            }), 200
+
+        else:
+            return jsonify({
+                'status': 404,
+                'error': 'wrong creditential'
+            }), 404
+
+
+@app.route('/api/v1/welcome')
+@jwt_required
+def welcome_msg():
+    username = get_jwt_identity()
+
+    return jsonify({
+        'message': f'{username} thanks for using chris api'
+    }), 200
+
+
+
+
 
 @app.route('/api/v1/accounts/', methods=['GET'])
+@jwt_required
 def get_accounts():
     if len(User.accounts) == 0:
         return jsonify({
@@ -257,6 +302,7 @@ def get_accounts():
     }), 200
 
 @app.route('/api/v1/account/<int:id>', methods=['GET'])
+@jwt_required
 def get_single_account(id):
     try:
         if len(User.accounts) == 0:

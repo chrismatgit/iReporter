@@ -545,6 +545,33 @@ class TestIncident(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
 
+    def test_delete_one_incident(self):
+        incident = {
+                    "location": "12",
+                    "createdBy": "1",
+                    "incType": "red-flag",
+                    "comment": "still under inverstigation",
+                    "status": "under_investigation",
+                    "video": "video.mp4",
+                    "image": "image.jpg"
+                    
+                }
+        response = self.tester.post(
+            'api/v1/incident/', content_type ='application/json',
+            data=json.dumps(incident)
+        )
+        reply = json.loads(response.data.decode())
+
+        print(response.data)
+        self.assertIn('incident created', reply['message'])
+        self.assertEqual(response.status_code, 201)
+
+        response = self.tester.get('/api/v1/delete_incident/2')
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'], 'incident deleted')
+        self.assertEqual(response.status_code, 200)
 
     # def tearDown(self):
     #     Incident.incidents.clear()
