@@ -1,0 +1,146 @@
+*{
+	margin: 0;
+	padding: 0;
+	font: Arial, Helvetica, sans-serif;
+	font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+h1, h2, h3{
+    font-family: 'Open sans', sans-serif;
+}
+header{
+	box-sizing: border-box;
+	text-align: center;
+	width: 100%;
+	padding: 25px 40px;
+	background-color: #696969;
+	overflow: hidden;
+
+}
+header h1{
+	float: left;
+	color: #fff;
+	font: normal 24px/1.5 'Open sans', sans-serif;
+
+}
+
+body{
+	background: #D3D3D3;
+}
+
+.login-box{
+	width: 500px;
+	background-color: rgba(1, 1, 20, 0.6);
+	margin: 100px auto;
+	border-radius: 10px;
+	box-shadow: 0 0 20px 5px #000;
+}
+.info{
+	width: 100%;
+	padding-top: 10px;
+	font-size: 35px;
+	color: #fff;
+	text-align: center;
+	text-shadow: 1px 1px 2px #000;
+
+}
+
+.form-box{
+	padding: 25PX;
+}
+
+.input-box{
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+	border: none;
+	font-size: 18px;
+	border-radius: 5px;
+	border-bottom: 2px solid #000;
+}
+.input-box:focus{
+	outline: none;
+	border-bottom: 3px solid #800000;
+
+}
+
+.remember {
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width: 20px;
+	height: 20px;
+}
+span{
+	position: absolute;
+	margin-left: 10px;
+	margin-top: 10px;
+	text-shadow: 1px 1px 2px #000;
+	color: #fff;
+}
+
+.forget-pass{
+	float: right;
+	margin-top: 10px;
+	color: #fff;
+	text-shadow: 1px 1px 1px #800000;
+	text-decoration: none;
+
+}
+
+.login-btn{
+	display: block;
+	font-size: 18px;
+    border-radius: 4px;
+    background-color:  #46B2B4;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.08);
+    padding: 09px 30px;
+    border: 0;
+    cursor: pointer;
+    width: 75%;
+}
+.account{
+	margin-top: 10px;
+	text-align:;
+	color: #fff;
+	font-size: 15px;
+	text-shadow: 0 2px 1px #000;
+}
+
+.createaccount{
+	color: #E6E6FA;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px #fff;
+	text-decoration: none;
+}
+
+.signup-btn{
+	display: block;
+	font-size: 18px;
+    border-radius: 4px;
+    background-color:  #dc143c;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.08);
+    padding: 09px 30px;
+    border: 0;
+    cursor: pointer;
+    margin-top: 8px;
+    width: 75%;
+
+}
+@media (max-width: 700px) {
+	.login-box{
+		width: 90%;
+		border: 10px;
+	}
+	.soften{
+		display: none;
+	}
+	header h1{
+        float: none;
+    }
