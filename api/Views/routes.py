@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, Blueprint
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from api.Controllers.user_controller import signup, login
+from api.Controllers.user_controller import signup, login, promote_user_as_admin
 
 
 bp = Blueprint('application', __name__)
@@ -20,6 +20,11 @@ def signUp():
 @bp.route('/login/', methods=['POST']) 
 def user_login():
     response = login()
+    return response
+
+@bp.route('/user/promote/<int:user_id>', methods=['PATCH'])
+def promote_user(user_id):
+    response = promote_user_as_admin(user_id)
     return response
 
 @bp.errorhandler(404)
