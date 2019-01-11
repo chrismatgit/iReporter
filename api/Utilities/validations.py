@@ -129,3 +129,31 @@ class Validations:
                     'status': 400,
                     'error': 'email already existed'
                 }
+
+class Login_validation:
+    '''Class handles all user validations when login'''
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def validate_username(self):
+        '''Method validates the firstname attribute.
+        :return:
+        a error message
+        '''
+        if not self.username or self.username == "" or not type(self.username) == str:
+            return {
+                'status': 400,
+                'error': 'Username field can not be left empty and should be a string'
+            }
+
+    def validate_password(self):
+        '''Method validates the password attribute.
+        :return:
+        a error message
+        '''
+        if not self.password or self.password == "" or not type(self.password) == str:
+            return {
+                'status': 400,
+                'error': 'Password field can not be left empty and should be a string'
+            }

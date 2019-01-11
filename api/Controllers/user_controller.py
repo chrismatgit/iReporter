@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from api.Models.Users import User
-from api.Utilities.validations import Validations
+from api.Utilities.validations import Validations, Login_validation
 from flask_jwt_extended import create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
@@ -74,4 +74,42 @@ def signup():
             'error': 'Something went wrong with your inputs'
         }), 400
 
+def login():
+    '''Function allows a user to login after sign up
+    :returns:
+    a success message with the username
+    '''
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        password = data.get("password")
+        validator = Login_validation(username, password)
+        invalid_username = validator.validate_username()
+        invalid_password = validator.validate_password()
+        valid = Validations.empty_user(User.accounts)
+
+        if not valid:
+            if not invalid_username:
+                if not invalid_password:
+                    for user in User.accounts:
+                        if user["username"]== username and check_password_hash(user["password"],password):
+                            token = create_access_token(username)
+                            return jsonify({
+                                "status": 200,
+                                "token": token,
+                                "message": f"{username} successfuly login"
+                            }), 200
+                        else:
+                            return jsonify({
+                                "status": 400,
+                                "error": "Wrong username or password"
+                            }), 400
+                return jsonify(invalid_password), 400
+            return jsonify(invalid_username), 400
+        return jsonify(valid), 400
+    except Exception:
+        return jsonify({
+            'status': 400,
+            'error': 'Something went wrong with your inputs'
+        }), 400
 
