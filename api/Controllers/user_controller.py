@@ -113,3 +113,35 @@ def login():
             'error': 'Something went wrong with your inputs'
         }), 400
 
+
+def promote_user_as_admin(user_id):
+    '''Function enables an admin to promote a user to be an admin
+    :params:
+    userd_id - holds integer value of the id of the individual user to be viewed
+    :returns:
+    a success message and the details of the user whose id matches the one entered by the user
+    '''
+    try:
+        validator = Validations.empty_user(User.accounts)
+        if not validator:
+            for user in User.accounts:
+                if user["user_id"] == user_id:
+                    user["isAdmin"] = True
+                    return jsonify({
+                        "status": 200,
+                        "data": user,
+                        "message": f"User with user_id {user_id} has been succesfuly promoted as an admin"
+                    }), 200
+                else:
+                    return jsonify({
+                        "status": 404,
+                        "error": "User does not exist"
+                    }), 404
+        else:
+            return jsonify(validator), 404
+
+    except IndexError:
+        return jsonify({
+            'message': 'incident does not exit or check your id',
+            'status': 404
+        }), 404
