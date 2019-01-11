@@ -10,6 +10,15 @@ def test_route():
     '''Function returns a welcome message'''
     return "welcome to iReporter"
 
+@bp.route('/welcome')
+@jwt_required
+def welcome():
+    username = get_jwt_identity()
+    return jsonify({
+        'status': 200,
+        'message': f'{username} thanks for using iReporter Api'
+    }), 200
+
 @bp.route('/signup/', methods=['POST'])
 def signUp():
     '''Function adds the user to accounts list
