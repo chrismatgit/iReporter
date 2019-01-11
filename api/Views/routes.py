@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, Blueprint
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from api.Controllers.user_controller import signup, login, promote_user_as_admin
+from api.Controllers.user_controller import signup, login, promote_user_as_admin, get_all_users
 
 
 bp = Blueprint('application', __name__)
@@ -26,6 +26,11 @@ def user_login():
 def promote_user(user_id):
     response = promote_user_as_admin(user_id)
     return response
+
+@bp.route('/users/', methods=['GET']) 
+def get_users():
+   response = get_all_users()
+   return response
 
 @bp.errorhandler(404)
 def page_not_found(e):
