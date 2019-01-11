@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, Blueprint
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from api.Controllers.user_controller import signup
+from api.Controllers.user_controller import signup, login
 
 
 bp = Blueprint('application', __name__)
@@ -15,6 +15,11 @@ def signUp():
     '''Function adds the user to accounts list
     returns a success message and the user details'''
     response = signup()
+    return response
+
+@bp.route('/login/', methods=['POST']) 
+def user_login():
+    response = login()
     return response
 
 @bp.errorhandler(404)
