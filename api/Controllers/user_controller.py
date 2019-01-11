@@ -145,3 +145,17 @@ def promote_user_as_admin(user_id):
             'message': 'incident does not exit or check your id',
             'status': 404
         }), 404
+
+def get_all_users():
+    ''' Function enables the view of all the users
+    :returns:
+    A list of all the account created
+    '''
+    validator = Validations.empty_user(User.accounts)
+    if not validator:
+        return jsonify({
+            'status': 200, 
+            'Data': [account for account in User.accounts]
+        }), 200
+    else:
+        return jsonify(validator), 404
