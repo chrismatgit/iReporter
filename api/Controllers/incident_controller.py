@@ -97,3 +97,35 @@ def get_unique_red_flag(incident_id):
             'message': 'incident does not exit or check your id',
             'status': 404
         }), 404
+
+def update_red_flag_loc(incident_id):
+    ''' Function enables the user to update a single red-flag record location
+    :param:
+    incident_id - holds integer value of the id of the individual red-flag to be updated
+    :returns:
+    A success message and the Details of the red-flag whose id matches the one entered and update the location if the incType equal red-flag.
+    '''
+    try:
+        validator = Incident_validation.empty_incident(Incident.reports)
+        if not validator:
+            data = request.get_json()
+            location = data.get("location")
+            val = Incident_validation.validate_red_flag_location(location)
+            if not val:
+                red_flag = next(incident for incident in Incident.reports if incident['incident_id'] == incident_id)
+                if red_flag['incType'] == 'red-flag':
+                    red_flag['location'] = location
+                    return jsonify({
+                        'status': 200,
+                        'message': 'location updated successfully'
+                    }), 200
+            else:
+                return jsonify(val), 400
+            
+        else:
+            return jsonify(validator), 400
+    except Exception:
+        return jsonify({
+            'status': 400,
+            'error': 'Something went wrong with your inputs or check your id in the URL'
+        }), 400
