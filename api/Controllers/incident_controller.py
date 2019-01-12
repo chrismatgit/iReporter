@@ -160,3 +160,34 @@ def update_red_flag_com(incident_id):
             'status': 400,
             'error': 'Something went wrong with your inputs or check your id in the URL'
         }), 400
+
+def delete_red_flag(incident_id):
+    ''' Function enables a user to delete a single incident record
+    :param:
+    incident_id - holds integer value of the id of the individual incident to be deleted
+    :returns:
+    the success message and the Details of the incident whose id matches the one entered to be deleted.
+    '''
+    try:
+        validator = Incident_validation.empty_incident(Incident.reports)
+        if not validator:
+            incident = next(incident for incident in Incident.reports if incident['incident_id'] == incident_id)
+            if incident:
+                Incident.reports.remove(incident)
+                return jsonify({
+                    'status': 200,
+                    'data': incident,
+                    'message': 'incident deleted'
+                }), 200
+            else:
+                return jsonify({
+                'status': 400,
+                'error': 'invalid incident'
+            }), 400
+        else:
+            return jsonify(validator), 400
+    except Exception:
+        return jsonify({
+            'message': 'incident does not exit or check your id',
+            'status': 404
+        }), 404

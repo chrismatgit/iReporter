@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, Blueprint
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from api.Controllers.user_controller import signup, login, promote_user_as_admin, get_all_users
-from api.Controllers.incident_controller import create_incident, get_all_incidents, get_unique_red_flag, update_red_flag_loc, update_red_flag_com
+from api.Controllers.incident_controller import create_incident, get_all_incidents, get_unique_red_flag,\
+ update_red_flag_loc, update_red_flag_com, delete_red_flag
 
 
 bp = Blueprint('application', __name__)
@@ -24,6 +25,16 @@ def user_login():
     returns a success message and the token'''
    response = login()
    return response
+
+@bp.route('/welcome')
+@jwt_required
+def welcome():
+    username = get_jwt_identity()
+    return jsonify({
+        'status': 200,
+        'message': f'{username} thanks for using iReporter Api'
+    }), 200
+
 
 @bp.route('/user/promote/<int:user_id>', methods=['PATCH'])
 def promote_user(user_id):
@@ -70,6 +81,13 @@ def update_red_flag_comment(incident_id):
    ''' Function allows the user to update the comment of a single incident in the reports list
     returns a success message and the red-flag updated'''
    response = update_red_flag_com(incident_id)
+   return response
+
+@bp.route('/incidents/<int:incident_id>', methods=['DELETE'])
+def delete_a_unique_redflag(incident_id):
+   ''' Function allows the user tdelete a single incident in the reports list
+    returns a success message if a record was deleted succeffuly'''
+   response = delete_red_flag(incident_id)
    return response
 
 @bp.errorhandler(404)
