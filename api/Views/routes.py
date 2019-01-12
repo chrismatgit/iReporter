@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, Blueprint
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from api.Controllers.user_controller import signup, login, promote_user_as_admin, get_all_users
-from api.Controllers.incident_controller import create_incident, get_all_incidents, get_unique_red_flag
+from api.Controllers.incident_controller import create_incident, get_all_incidents, get_unique_red_flag, update_red_flag_loc
 
 
 bp = Blueprint('application', __name__)
@@ -56,6 +56,13 @@ def get_red_flag(incident_id):
    ''' Function allows the user to get a single incident in the reports list
     returns a success message and the red-flag'''
    response = get_unique_red_flag(incident_id)
+   return response
+
+@bp.route('/incidents/<int:incident_id>/location', methods=['PATCH'])
+def update_red_flag_location(incident_id):
+   ''' Function allows the user to update the location of a single incident in the reports list
+    returns a success message and the red-flag updated'''
+   response = update_red_flag_loc(incident_id)
    return response
 
 @bp.errorhandler(404)
