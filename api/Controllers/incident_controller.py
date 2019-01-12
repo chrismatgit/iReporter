@@ -74,3 +74,26 @@ def get_all_incidents():
         }), 200
     else:
         return jsonify(validator), 400
+
+def get_unique_red_flag(incident_id):
+    ''' Function enables the view of a single red-flag record
+    :param:
+    incident_id - holds integer value of the id of the individual red-flag to be viewed
+    :returns:
+    Details of the red-flag whose id matches the one entered.
+    '''
+    try:
+        validator = Incident_validation.empty_incident(Incident.reports)
+        if not validator:
+            return jsonify({
+                'status': 200,
+                'data': next(incident for incident in Incident.reports if incident['incident_id'] == incident_id),
+                'message': 'incidents fetched'
+            }), 200
+        else:
+            return jsonify(validator), 400
+    except IndexError:
+        return jsonify({
+            'message': 'incident does not exit or check your id',
+            'status': 404
+        }), 404
