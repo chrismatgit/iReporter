@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, Blueprint
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from api.Controllers.user_controller import signup, login, promote_user_as_admin, get_all_users
-from api.Controllers.incident_controller import create_incident
+from api.Controllers.incident_controller import create_incident, get_all_incidents
 
 
 bp = Blueprint('application', __name__)
@@ -42,6 +42,13 @@ def create_report():
    '''Function adds the report to reports list
     returns a success message and the account details'''
    response = create_incident()
+   return response
+
+@bp.route('/incidents/', methods=['GET'])
+def get_incidents():
+   ''' Function allows the user to get all the incident in the reports list
+    returns a success message and all the incidents'''
+   response = get_all_incidents()
    return response
 
 @bp.errorhandler(404)

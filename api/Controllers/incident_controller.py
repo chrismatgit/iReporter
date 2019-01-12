@@ -61,3 +61,16 @@ def create_incident():
             'error': 'Something went wrong with your inputs'
         }), 400
 
+def get_all_incidents():
+    ''' Function enables the view of all the reports
+    :returns:
+    A list of all the incident created
+    '''
+    validator = Incident_validation.empty_incident(Incident.reports)
+    if not validator:
+        return jsonify({
+            'status': 200,
+            'data': [incident for incident in Incident.reports]
+        }), 200
+    else:
+        return jsonify(validator), 400
