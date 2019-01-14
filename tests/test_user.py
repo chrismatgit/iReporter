@@ -4,11 +4,15 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
 from api import app
-from api.Models.Users import User
+from api.Models.Users import User 
+from base_test import BaseTest
 
-class Test_User(unittest.TestCase):
+
+class Test_user(BaseTest):
+
     def setUp(self):
-        self.tester = app.test_client()
+        self.tester = app.test_client(self)
+        self.accounts = User.accounts
 
     def test_signup(self):
         account = {
@@ -736,7 +740,23 @@ class Test_User(unittest.TestCase):
         self.assertIn("Wrong username or password", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_welcome_message(self):
+        reply = self.login_user()
+        token = reply['token']
+        response = self.tester.get(
+            '/api/v1/welcome',
+            content_type='application/json',
+            headers={'Authorization': f'Bearer {token}'}
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'], 'admin thanks for using iReporter Api')
+        self.assertEqual(response.status_code, 200)
+
     def test_promote_a_user(self):
+        reply = self.login_user()
+        token = reply['token']      
         account = {
             "email": "kelly@example.com",
             "firstname": "mary",
@@ -751,8 +771,8 @@ class Test_User(unittest.TestCase):
         }
 
         response = self.tester.post(
-            '/api/v1/signup/', content_type ='application/json',
-            data=json.dumps(account)
+            '/api/v1/signup/', content_type ='application/json', 
+            data=json.dumps(account), headers={'Authorization': f'Bearer {token}'}
         )
         reply = json.loads(response.data.decode())
 
@@ -761,13 +781,15 @@ class Test_User(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
         response = self.tester.patch(
-            '/api/v1/user/promote/1', content_type ='application/json'
+            '/api/v1/user/promote/1', content_type ='application/json', headers={'Authorization': f'Bearer {token}'}
         )
         print(response.data)
         self.assertEqual(response.status_code, 200)
 
     
     def test_invalid_user_id_to_promote(self):
+        reply = self.login_user()
+        token = reply['token']
         account = {
             "email": "kelly@example.com",
             "firstname": "mary",
@@ -783,7 +805,7 @@ class Test_User(unittest.TestCase):
 
         response = self.tester.post(
             '/api/v1/signup/', content_type ='application/json',
-            data=json.dumps(account)
+            data=json.dumps(account), headers={'Authorization': f'Bearer {token}'}
         )
         reply = json.loads(response.data.decode())
 
@@ -792,12 +814,14 @@ class Test_User(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
         response = self.tester.patch(
-            '/api/v1/user/promote/2', content_type ='application/json'
+            '/api/v1/user/promote/2', content_type ='application/json', headers={'Authorization': f'Bearer {token}'}
         )
         print(response.data)
         self.assertEqual(response.status_code, 404)
 
     def test_get_all_users(self):
+        reply = self.login_user()
+        token = reply['token']
         account = {
             "email": "kelly@example.com",
             "firstname": "mary",
@@ -813,7 +837,7 @@ class Test_User(unittest.TestCase):
 
         response = self.tester.post(
             '/api/v1/signup/', content_type ='application/json',
-            data=json.dumps(account)
+            data=json.dumps(account), headers={'Authorization': f'Bearer {token}'}
         )
         reply = json.loads(response.data.decode())
 
@@ -822,23 +846,10 @@ class Test_User(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
         response = self.tester.get(
-            '/api/v1/users/', content_type ='application/json'
+            '/api/v1/users/', content_type ='application/json', headers={'Authorization': f'Bearer {token}'}
         )
         self.assertEqual(response.status_code, 200)
-
-
-    def test_get_all_users_is_empty(self):
-        response = self.tester.get(
-            '/api/v1/users/', content_type ='application/json'
-        )
-        self.assertEqual(response.status_code, 404)
-
-    def test_welcome(self):
-        response = self.tester.get('/api/v1/')
-        self.assertEqual(response.status_code, 200)
-
 
     def tearDown(self):
         User.accounts.clear()
-
 
