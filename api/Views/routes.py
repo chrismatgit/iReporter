@@ -98,7 +98,7 @@ def delete_a_unique_redflag(incident_id):
    response = delete_red_flag(incident_id)
    return response
 
-@bp.errorhandler(404)
+@bp.app_errorhandler(404)
 def page_not_found(e):
    return jsonify({
       'issue': 'you have entered an unknown URL',

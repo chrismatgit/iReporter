@@ -15,7 +15,8 @@ class Validations:
     def validate_firstname(self):
         '''Method validates the firstname attribute.
         :return:
-        a error message
+        an error message and a 400 response. 
+
         '''
         if not self.firstname or self.firstname == "" or not type(self.firstname) == str:
             return {
@@ -24,9 +25,9 @@ class Validations:
             }
 
     def validate_lastname(self):
-        '''Method validates the lastname attribute.
+        '''This validate_lastname Method validates the lastname attribute.
         :return:
-        a error message
+        an error message and 400 status to the user
         '''
         if not self.lastname or self.lastname == "" or not type(self.lastname) == str:
             return {
