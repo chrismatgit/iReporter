@@ -36,6 +36,8 @@ class Test_user(BaseTest):
 
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
         self.assertEqual(response.status_code, 201)
 
     
@@ -85,6 +87,8 @@ class Test_user(BaseTest):
 
         print(response.data)
         self.assertIn("username already taken", reply['error'])
+        self.assertEqual(reply['status'], 409)
+        self.assertIsInstance(reply,dict)
         self.assertEqual(response.status_code, 409)
 
     def test_duplicate_email(self):
@@ -109,6 +113,8 @@ class Test_user(BaseTest):
 
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
         self.assertEqual(response.status_code, 201)
 
         account = {
@@ -132,6 +138,8 @@ class Test_user(BaseTest):
 
         print(response.data)
         self.assertIn("email already existed", reply['error'])
+        self.assertEqual(reply['status'], 409)
+        self.assertIsInstance(reply,dict)
         self.assertEqual(response.status_code, 409)
 
     def test_invalid_email(self):
@@ -157,6 +165,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Email field can not be left empty, is invalid(eg: example@example.com) and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
   
     def test_empty_email(self):
         account = {
@@ -181,6 +191,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Email field can not be left empty, is invalid(eg: example@example.com) and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_email_is_not_string(self):
         account = {
@@ -205,6 +217,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Email field can not be left empty, is invalid(eg: example@example.com) and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_empty_firstname(self):
         account = {
@@ -229,6 +243,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Firstname field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_firstname_is_not_string(self):
@@ -254,6 +270,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Firstname field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_empty_lastname(self):
@@ -279,6 +297,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Lastname field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_lastname_is_not_string(self):
@@ -304,6 +324,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Lastname field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_empty_othername(self):
         account = {
@@ -328,6 +350,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("othernames field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_orthername_is_not_string(self):
@@ -353,6 +377,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("othernames field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_empty_password(self):
@@ -378,6 +404,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Password field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_password_is_not_string(self):
@@ -403,6 +431,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Password field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_empty_phone_number(self):
@@ -428,6 +458,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("phone_number field can not be left empty and should be a string!", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_phone_number_is_not_string(self):
@@ -453,6 +485,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("phone_number field can not be left empty and should be a string!", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_empty_username(self):
         account = {
@@ -477,6 +511,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Username field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
 
     def test_username_is_not_string(self):
@@ -502,9 +538,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Username field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
-
-
-
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_login(self):
         account = {
@@ -529,6 +564,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         login_info = {
             "username": "kellym",
@@ -544,6 +581,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("kellym successfuly login", reply['message'])
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(reply['status'], 200)
+        self.assertIsInstance(reply,dict)
 
     def test_login_username_is_empty(self):
         account = {
@@ -568,6 +607,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         login_info = {
             "username": "",
@@ -583,6 +624,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Username field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_login_username_is_not_string(self):
         account = {
@@ -607,6 +650,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         login_info = {
             "username": 121554,
@@ -622,6 +667,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Username field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_login_password_is_empty(self):
         account = {
@@ -646,6 +693,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         login_info = {
             "username": "kellym",
@@ -661,6 +710,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Password field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_login_password_is_not_string(self):
         account = {
@@ -685,6 +736,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         login_info = {
             "username": "kellym",
@@ -700,6 +753,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Password field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_login_wrong_creditential(self):
         account = {
@@ -724,6 +779,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         login_info = {
             "username": "kellym",
@@ -739,6 +796,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("Wrong username or password", reply['error'])
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(reply['status'], 400)
+        self.assertIsInstance(reply,dict)
 
     def test_welcome_message(self):
         reply = self.login_user()
@@ -753,6 +812,8 @@ class Test_user(BaseTest):
 
         self.assertEqual(reply['message'], 'admin thanks for using iReporter Api')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(reply['status'], 200)
+        self.assertIsInstance(reply,dict)
 
     def test_promote_a_user(self):
         reply = self.login_user()
@@ -779,6 +840,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         response = self.tester.patch(
             '/api/v1/user/promote/1', content_type ='application/json', headers={'Authorization': f'Bearer {token}'}
@@ -812,6 +875,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         response = self.tester.patch(
             '/api/v1/user/promote/2', content_type ='application/json', headers={'Authorization': f'Bearer {token}'}
@@ -844,6 +909,8 @@ class Test_user(BaseTest):
         print(response.data)
         self.assertIn("mary has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(reply['status'], 201)
+        self.assertIsInstance(reply,dict)
 
         response = self.tester.get(
             '/api/v1/users/', content_type ='application/json', headers={'Authorization': f'Bearer {token}'}
