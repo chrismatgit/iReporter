@@ -9,9 +9,5 @@ omit =
     */usr/lib/python3/*
     tests/*
     */models.py
-    bin/
-    lib/
-    share/
-    include/
-    tests/
+    
     
