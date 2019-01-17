@@ -37,11 +37,13 @@ def welcome():
 
 
 @bp.route('/user/promote/<int:user_id>', methods=['PATCH'])
+@jwt_required
 def promote_user(user_id):
    response = promote_user_as_admin(user_id)
    return response
 
 @bp.route('/users/', methods=['GET']) 
+@jwt_required
 def get_users():
    '''Function allows the user to get all the users in the account list
     returns a success message and the token'''
@@ -49,6 +51,7 @@ def get_users():
    return response
 
 @bp.route('/incident/', methods=['POST'])
+@jwt_required
 def create_report():
    '''Function adds the report to reports list
     returns a success message and the account details'''
@@ -56,6 +59,7 @@ def create_report():
    return response
 
 @bp.route('/incidents/', methods=['GET'])
+@jwt_required
 def get_incidents():
    ''' Function allows the user to get all the incident in the reports list
     returns a success message and all the incidents'''
@@ -63,6 +67,7 @@ def get_incidents():
    return response
 
 @bp.route('/incidents/<int:incident_id>', methods=['GET'])
+@jwt_required
 def get_red_flag(incident_id):
    ''' Function allows the user to get a single incident in the reports list
     returns a success message and the red-flag'''
@@ -70,6 +75,7 @@ def get_red_flag(incident_id):
    return response
 
 @bp.route('/incidents/<int:incident_id>/location', methods=['PATCH'])
+@jwt_required
 def update_red_flag_location(incident_id):
    ''' Function allows the user to update the location of a single incident in the reports list
     returns a success message and the red-flag updated'''
@@ -77,6 +83,7 @@ def update_red_flag_location(incident_id):
    return response
 
 @bp.route('/incidents/<int:incident_id>/comment', methods=['PATCH'])
+@jwt_required
 def update_red_flag_comment(incident_id):
    ''' Function allows the user to update the comment of a single incident in the reports list
     returns a success message and the red-flag updated'''
@@ -84,13 +91,14 @@ def update_red_flag_comment(incident_id):
    return response
 
 @bp.route('/incidents/<int:incident_id>', methods=['DELETE'])
+@jwt_required
 def delete_a_unique_redflag(incident_id):
    ''' Function allows the user tdelete a single incident in the reports list
     returns a success message if a record was deleted succeffuly'''
    response = delete_red_flag(incident_id)
    return response
 
-@bp.errorhandler(404)
+@bp.app_errorhandler(404)
 def page_not_found(e):
    return jsonify({
       'issue': 'you have entered an unknown URL',
