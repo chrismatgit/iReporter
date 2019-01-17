@@ -37,6 +37,28 @@ class Test_Incident(BaseTest):
         self.assertIn("red-flag has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
 
+    def test_create_incident_with_no_token(self):
+        report = {
+            "comment": "No comment",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "img.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_create_comment_is_empty(self):
         reply = self.login_user()
         token = reply['token']
@@ -60,7 +82,29 @@ class Test_Incident(BaseTest):
         print(response.data)
         self.assertIn("comment field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
-    
+
+    def test_create_comment_is_empty_without_auth(self):
+        report = {
+            "comment": "",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "img.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_create_createdBy_is_not_an_integer(self):
         reply = self.login_user()
         token = reply['token']
@@ -84,6 +128,29 @@ class Test_Incident(BaseTest):
         print(response.data)
         self.assertIn("createdBy field can not be left empty and should be an integer", reply['error'])
         self.assertEqual(response.status_code, 400)
+
+    def test_create_createdBy_is_not_an_integer_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": False,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "img.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
 
     def test_create_createdBy_is_empty(self):
         reply = self.login_user()
@@ -109,6 +176,29 @@ class Test_Incident(BaseTest):
         self.assertIn("createdBy field can not be left empty and should be an integer", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+
+    def test_create_createdBy_is_empty_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": "",
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "img.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_create_location_is_not_a_string(self):
         reply = self.login_user()
         token = reply['token']
@@ -132,6 +222,29 @@ class Test_Incident(BaseTest):
         print(response.data)
         self.assertIn("location field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+
+
+    def test_create_location_is_not_a_string_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "img.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": 101010,
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
 
     def test_create_location_is_empty(self):
         reply = self.login_user()
@@ -157,6 +270,28 @@ class Test_Incident(BaseTest):
         self.assertIn("location field can not be left empty and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_create_location_is_empty_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "img.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "",
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_image_has_an_invalid_format(self):
         reply = self.login_user()
         token = reply['token']
@@ -180,6 +315,28 @@ class Test_Incident(BaseTest):
         print(response.data)
         self.assertIn("image has an invalid format(eg: image.png  or image.jpg", reply['error'])
         self.assertEqual(response.status_code, 400)
+
+    def test_image_has_an_invalid_format_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "img.gif",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
 
     def test_image_has_an_empty_name(self):
         reply = self.login_user()
@@ -205,6 +362,29 @@ class Test_Incident(BaseTest):
         self.assertIn("image has an invalid format(eg: image.png  or image.jpg", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_image_has_an_empty_name_without_Auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": ".jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
+
     def test_image_has_a_invalid_input(self):
         reply = self.login_user()
         token = reply['token']
@@ -229,6 +409,27 @@ class Test_Incident(BaseTest):
         self.assertIn("Something went wrong with your inputs", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_image_has_a_invalid_input_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": 1212546,
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
 
     def test_video_has_invalid_format(self):
         reply = self.login_user()
@@ -254,6 +455,28 @@ class Test_Incident(BaseTest):
         self.assertIn("video has an invalid format(eg: video.mp4  or video.avi)", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_video_has_invalid_format_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "img.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.xls"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_video_has_an_invalid_name(self):
         reply = self.login_user()
         token = reply['token']
@@ -278,6 +501,28 @@ class Test_Incident(BaseTest):
         self.assertIn("video has an invalid format(eg: video.mp4  or video.avi)", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_video_has_an_invalid_name_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": ".avi"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_video_has_invalid_input(self):
         reply = self.login_user()
         token = reply['token']
@@ -301,6 +546,28 @@ class Test_Incident(BaseTest):
         print(response.data)
         self.assertIn("Something went wrong with your inputs", reply['error'])
         self.assertEqual(response.status_code, 400)
+
+    def test_video_has_invalid_input_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": True
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
 
     def test_incType_is_empty(self):
         reply = self.login_user()
@@ -327,6 +594,28 @@ class Test_Incident(BaseTest):
                 and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_incType_is_empty_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_incType_is_not_a_string(self):
         reply = self.login_user()
         token = reply['token']
@@ -351,6 +640,28 @@ class Test_Incident(BaseTest):
         self.assertIn("incType field can not be left empty, it should be eg: red-flag or intervention\
                 and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
+
+    def test_incType_is_not_a_string_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": False,
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
     
     def test_incType_is_not_red_flag_or_intervention(self):
         reply = self.login_user()
@@ -377,6 +688,28 @@ class Test_Incident(BaseTest):
                 and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_incType_is_not_red_flag_or_intervention_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "crime",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_incType_is_intervention(self):
         reply = self.login_user()
         token = reply['token']
@@ -400,6 +733,28 @@ class Test_Incident(BaseTest):
         print(response.data)
         self.assertIn("intervention has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+
+    def test_incType_is_intervention_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "intervention",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
 
     def test_incType_is_red_flag(self):
         reply = self.login_user()
@@ -425,6 +780,27 @@ class Test_Incident(BaseTest):
         self.assertIn("red-flag has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
 
+    def test_incType_is_red_flag_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
 
     def test_status_is_not_a_string(self):
         reply = self.login_user()
@@ -451,6 +827,28 @@ class Test_Incident(BaseTest):
                 and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_status_is_not_a_string_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": 1214,
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_status_is_empty(self):
         reply = self.login_user()
         token = reply['token']
@@ -475,7 +873,29 @@ class Test_Incident(BaseTest):
         self.assertIn("status field can not be left empty, it should be eg: draft, resolved, under_investigation or rejected \
                 and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
-    
+
+    def test_status_is_empty_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "",
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_status_is_string_but_invalid(self):
         reply = self.login_user()
         token = reply['token']
@@ -501,6 +921,28 @@ class Test_Incident(BaseTest):
                 and should be a string", reply['error'])
         self.assertEqual(response.status_code, 400)
 
+    def test_status_is_string_but_invalid_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "over",
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
+
     def test_status_is_draft(self):
         reply = self.login_user()
         token = reply['token']
@@ -524,6 +966,28 @@ class Test_Incident(BaseTest):
         print(response.data)
         self.assertIn("red-flag has been created successfuly", reply['message'])
         self.assertEqual(response.status_code, 201)
+
+    def test_status_is_draft_without_auth(self):
+        report = {
+            "comment": "No comment for now",
+            "createdBy": 1,
+            "createdOn": "Thu, 13 Dec 2018 08:33:24 GMT",
+            "image": "image.jpg",
+            "incType": "red-flag",
+            "incident_id": 1,
+            "location": "101010",
+            "status": "draft",
+            "video": "video.mp4"
+        }
+
+        response = self.tester.post(
+            '/api/v1/incident/', content_type='application/json',
+            data = json.dumps(report)
+        )
+        reply = json.loads(response.data.decode())
+        print(response.data)
+        self.assertIn("Missing Authorization Header", reply['msg'])
+        self.assertEqual(response.status_code, 401)
 
     def test_status_is_under_investigation(self):
         reply = self.login_user()
