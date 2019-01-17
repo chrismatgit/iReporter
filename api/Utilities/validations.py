@@ -3,93 +3,46 @@ import re
 import os
 class Validations:
     '''Class handles all user validations when signup'''
-    def __init__(self, firstname, lastname, othernames, email, phone_number, username, password):
-        self.firstname = firstname
-        self.lastname = lastname
-        self.othernames = othernames
-        self.email = email
-        self.phone_number = phone_number
-        self.username = username
-        self.password = password
-    
-    def validate_firstname(self):
-        '''Method validates the firstname attribute.
-        :return:
-        an error message and a 400 response. 
-
-        '''
-        if not self.firstname or self.firstname == "" or not type(self.firstname) == str:
+    def user_validation(self, firstname, lastname, othernames, email, phone_number, username, password):
+        '''method that validate all the user inputs'''
+        if not firstname or firstname == "" or not type(firstname) == str:
             return {
                 'status': 400,
                 'error': 'Firstname field can not be left empty and should be a string'
             }
 
-    def validate_lastname(self):
-        '''This validate_lastname Method validates the lastname attribute.
-        :return:
-        an error message and 400 status to the user
-        '''
-        if not self.lastname or self.lastname == "" or not type(self.lastname) == str:
+        if not lastname or lastname == "" or not type(lastname) == str:
             return {
                 'status': 400,
                 'error': 'Lastname field can not be left empty and should be a string'
             }
         
-
-    def validate_othernames(self):
-        '''Method validates the othernames attribute.
-        :return:
-        a error message
-        '''
-        if not self.othernames or self.othernames == "" or not type(self.othernames) == str:
+        if not othernames or othernames == "" or not type(othernames) == str:
             return {
                 'status': 400,
                 'error': 'othernames field can not be left empty and should be a string'
             }
-        
-    
-    def validate_email(self):
-        '''Method validates the email attribute.
-        :return:
-        a error message
-        '''
-        if not self.email or not type(self.email) == str or self.email == "" or \
-        not re.match(r"[^@.]+@[A-Za-z]+\.[a-z]+", self.email):
+     
+        if not email or not type(email) == str or email == "" or \
+        not re.match(r"[^@.]+@[A-Za-z]+\.[a-z]+", email):
             return {
                 'status': 400,
                 'error': 'Email field can not be left empty, is invalid(eg: example@example.com) and should be a string'
             }
         
-
-    def validate_phone_number(self):
-        '''Method validates the phone_number attribute.
-        :return:
-        a error message
-        '''
-        if not self.phone_number or self.phone_number == "" or not type(self.phone_number) == str:
+        if not phone_number or phone_number == "" or not type(phone_number) == str:
             return {
                 'status': 400,
                 'error': 'phone_number field can not be left empty and should be a string!'
             }
         
-
-    def validate_username(self):
-        '''Method validates the username attribute.
-        :return:
-        a error message
-        '''
-        if not self.username or self.username == "" or not type(self.username) == str:
+        if not username or username == "" or not type(username) == str:
             return {
                 'status': 400,
                 'error': 'Username field can not be left empty and should be a string'
             }
-    
-    def validate_password(self):
-        '''Method validates the password attribute.
-        :return:
-        a error message
-        '''
-        if not self.password or self.password == "" or not type(self.password) == str:
+ 
+        if not password or password == "" or not type(password) == str:
             return {
                 'status': 400,
                 'error': 'Password field can not be left empty and should be a string'
@@ -122,38 +75,26 @@ class Validations:
         for user in User.accounts:
             if user["username"] == username:
                 return {
-                    'status': 400,
+                    'status': 409,
                     'error': 'username already taken'
                 }
             elif user["email"] == email:
                 return {
-                    'status': 400,
+                    'status': 409,
                     'error': 'email already existed'
                 }
 
 class Login_validation:
     '''Class handles all user validations when login'''
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
-    def validate_username(self):
-        '''Method validates the firstname attribute.
-        :return:
-        a error message
-        '''
-        if not self.username or self.username == "" or not type(self.username) == str:
+    def exist_user_validation(self, username, password):
+        '''method that validate all the login input from the user'''
+        if not username or username == "" or not type(username) == str:
             return {
                 'status': 400,
                 'error': 'Username field can not be left empty and should be a string'
             }
 
-    def validate_password(self):
-        '''Method validates the password attribute.
-        :return:
-        a error message
-        '''
-        if not self.password or self.password == "" or not type(self.password) == str:
+        if not password or password == "" or not type(password) == str:
             return {
                 'status': 400,
                 'error': 'Password field can not be left empty and should be a string'
@@ -161,96 +102,52 @@ class Login_validation:
 
 class Incident_validation:
     '''Class handles all incident validations'''
-    def __init__(self, createdBy, incType, location, status, image, video, comment):
-        self.createdBy = createdBy
-        self.incType = incType
-        self.location = location
-        self.status = status
-        self.image = image
-        self.video = video
-        self.comment = comment
-
-    def validate_createdBy(self):
-        '''Method validates the createdBy attribute.
-        :return:
-        a error message
-        '''
-        if not self.createdBy or not isinstance(self.createdBy, int):
+    def add_incident_validation(self, createdBy, incType, location, status, image, video, comment):
+        '''Method that validate all the incident input from the user'''
+        if not createdBy or not isinstance(createdBy, int):
             return {
                 'status': 400,
                 'error': 'createdBy field can not be left empty and should be an integer'
                 }
-        
-    def validate_incType(self):
-        '''Method validates the incType attribute.
-        :return:
-        a error message
-        '''
-        if not self.incType or self.incType == "" or not self.incType == "intervention" \
-        and not self.incType == "red-flag" or not isinstance(self.incType, str):
+
+        if not incType or incType == "" or not incType == "intervention" \
+        and not incType == "red-flag" or not isinstance(incType, str):
             return {
                 'status': 400,
                 'error': 'incType field can not be left empty, it should be eg: red-flag or intervention\
                 and should be a string'
             }
     
-    def validate_location(self):
-        '''Method validates the location attribute.
-        :return:
-        a error message
-        '''
-        if not self.location or self.location == "" or not isinstance(self.location, str):
+        if not location or location == "" or not isinstance(location, str):
             return {
                 'status': 400,
                 'error': 'location field can not be left empty and should be a string'
             }
     
-    def validate_status(self):
-        '''Method validates the status attribute.
-        :return:
-        a error message
-        '''
-        if not self.status or self.status == "" or not self.status == "draft" \
-        and not self.status == "under_investigation" and not self.status== "rejected"\
-         and not self.status=="resolved" or not isinstance(self.status, str):
+        if not status or status == "" or not status == "draft" \
+        and not status == "under_investigation" and not status== "rejected"\
+         and not status=="resolved" or not isinstance(status, str):
             return {
                 'status': 400,
                 'error':'status field can not be left empty, it should be eg: draft, resolved, under_investigation or rejected \
                 and should be a string'
             }
-
-    def validate_image(self):
-        '''Method validates the image attribute.
-        :return:
-        a error message
-        '''
         extensions = [".jpg", ".png"]
-        details = os.path.splitext(self.image)
+        details = os.path.splitext(image)
         if details[1] not in extensions:
             return {
                 'status': 400,
                 'error': 'image has an invalid format(eg: image.png  or image.jpg'
             }
-
-    def validate_video(self):
-        '''Method validates the video attribute.
-        :return:
-        a error message
-        '''
         extensions = [".mp4", ".avi"]
-        details = os.path.splitext(self.video)
+        details = os.path.splitext(video)
         if details[1] not in extensions:
             return {
                 'status': 400,
                 'error': 'video has an invalid format(eg: video.mp4  or video.avi)'
         }
-    
-    def validate_comment(self):
-        '''Method validates the comment attribute.
-        :return:
-        a error message
-        '''
-        if not self.comment or self.comment == "" or not isinstance(self.comment, str):
+
+        if not comment or comment == "" or not isinstance(comment, str):
             return {
                 'status': 400,
                 'error': 'comment field can not be left empty and should be a string'

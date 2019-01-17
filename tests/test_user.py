@@ -85,7 +85,7 @@ class Test_user(BaseTest):
 
         print(response.data)
         self.assertIn("username already taken", reply['error'])
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 409)
 
     def test_duplicate_email(self):
         account = {
@@ -132,7 +132,7 @@ class Test_user(BaseTest):
 
         print(response.data)
         self.assertIn("email already existed", reply['error'])
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 409)
 
     def test_invalid_email(self):
         account = {
