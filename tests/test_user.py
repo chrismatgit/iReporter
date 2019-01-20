@@ -39,8 +39,6 @@ class Test_user(BaseTest):
         self.assertEqual(reply['status'], 201)
         self.assertIsInstance(reply,dict)
         self.assertEqual(response.status_code, 201)
-
-    
     
     def test_duplicate_username(self):
         account = {

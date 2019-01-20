@@ -25,7 +25,7 @@ The UI pages do not need much to be viewed as any web browser can view them from
   ```
   Switch to the cloned directory, install a virtual environment, create a virtual environment, activate it, checkout to the most stable branch, install app dependencies and run the app.
   ```sh
-    $ cd Store-Manager
+    $ cd iReporter
     $ pip install virtualenv
     $ virtualenv -p python3 venv
     $ source venv/bin/activate
